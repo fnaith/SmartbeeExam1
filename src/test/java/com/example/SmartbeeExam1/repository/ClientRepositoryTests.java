@@ -1,6 +1,7 @@
 package com.example.SmartbeeExam1.repository;
 
 import com.example.SmartbeeExam1.model.Client;
+import io.swagger.Swagger2SpringBoot;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,7 +12,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest
+@SpringBootTest(classes = Swagger2SpringBoot.class)
 public class ClientRepositoryTests {
 
     @Resource
@@ -85,6 +86,7 @@ public class ClientRepositoryTests {
         client.setCreatedAt(new Date());
         client.setUpdatedBy("");
         client.setUpdatedAt(new Date());
+        client.setDeleted(false);
 
         return client;
     }

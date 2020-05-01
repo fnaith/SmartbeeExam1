@@ -8,6 +8,7 @@ CREATE TABLE COMPANY (
   created_at Date NOT NULL,
   updated_by VARCHAR(50) NOT NULL,
   updated_at Date NOT NULL,
+  deleted NUMBER(1,0) NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -23,5 +24,6 @@ CREATE TABLE CLIENT (
   created_at Date NOT NULL,
   updated_by VARCHAR(50) NOT NULL,
   updated_at Date NOT NULL,
+  deleted NUMBER(1,0) NOT NULL,
   PRIMARY KEY(id)
 );

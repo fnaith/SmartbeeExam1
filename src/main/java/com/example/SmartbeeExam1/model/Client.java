@@ -1,8 +1,8 @@
 package com.example.SmartbeeExam1.model;
 
+import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -37,6 +37,9 @@ public class Client {
 
     @Column(name = "updated_at")
     Date updatedAt;
+
+    @Column(name = "deleted")
+    Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -108,5 +111,13 @@ public class Client {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

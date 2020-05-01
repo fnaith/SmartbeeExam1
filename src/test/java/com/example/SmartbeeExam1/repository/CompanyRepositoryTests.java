@@ -1,6 +1,7 @@
 package com.example.SmartbeeExam1.repository;
 
 import com.example.SmartbeeExam1.model.Company;
+import io.swagger.Swagger2SpringBoot;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,7 +12,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest
+@SpringBootTest(classes = Swagger2SpringBoot.class)
 public class CompanyRepositoryTests {
 
     @Resource
@@ -44,6 +45,7 @@ public class CompanyRepositoryTests {
 
         Company company2 = companyRepository.findById(id).orElse(null);
         assertEquals(name, company2.getName());
+        companyRepository.save(company1);
 
         company1.setName(newName);
         companyRepository.save(company1);
@@ -83,6 +85,7 @@ public class CompanyRepositoryTests {
         company.setCreatedAt(new Date());
         company.setUpdatedBy("");
         company.setUpdatedAt(new Date());
+        company.setDeleted(false);
 
         return company;
     }

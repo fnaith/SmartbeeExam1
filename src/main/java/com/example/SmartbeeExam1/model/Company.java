@@ -32,6 +32,9 @@ public class Company {
     @Column(name = "updated_at")
     Date updatedAt;
 
+    @Column(name = "deleted")
+    Boolean deleted;
+
     public Integer getId() {
         return id;
     }
@@ -86,5 +89,13 @@ public class Company {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
