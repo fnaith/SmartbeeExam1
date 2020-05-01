@@ -34,3 +34,60 @@ Note that all
 ### Reference
 - https://www.hangge.com/blog/cache/detail_2672.html
 - https://www.hangge.com/blog/cache/detail_2674.html
+
+## Write Dao and test
+
+Even using H2 has some pitfall, I still think JPA is very nice to work with. The config method is more neat than Spring MVC.
+Also, in-memory db is mush more testing than old day. The schema as following :
+
+```
+CREATE TABLE COMPANY (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  address VARCHAR(200) NOT NULL,
+  created_by VARCHAR(50) NOT NULL,
+  created_at Date NOT NULL,
+  updated_by VARCHAR(50) NOT NULL,
+  updated_at Date NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE CLIENT (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  company_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  phone VARCHAR(50) NOT NULL,
+  created_by VARCHAR(50) NOT NULL,
+  created_at Date NOT NULL,
+  updated_by VARCHAR(50) NOT NULL,
+  updated_at Date NOT NULL,
+  PRIMARY KEY(id)
+);
+```
+
+### Reference
+- https://github.com/iamvickyav/spring-boot-data-H2-embedded
+- https://www.baeldung.com/spring-jpa-test-in-memory-database
+- https://www.baeldung.com/spring-boot-h2-database
+- https://www.cnblogs.com/v1haoge/p/9959855.html
+
+## Write Swagger yaml
+
+TODO
+
+## Complete RESTful API
+
+TODO
+
+## Create UI for CRUD
+
+TODO
+
+## Apply privilege on RESTful API
+
+TODO
+
+## Adjust error handling for UI
+
+TODO
