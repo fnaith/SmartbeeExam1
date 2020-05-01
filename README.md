@@ -12,10 +12,25 @@ My plan to complete this task as following :
 - Apply privilege on RESTful API : To meet the requirements, RESTful API will response error message when permission denied.
 - Adjust error handling for UI : Add alert when to handle error message.
 
-## Setting Spring Security
+## Create Heroku app
 
 Follow steps in reference, we can easily build a Spring Boot app on `https://smartbee-exam1.herokuapp.com/`.
 
 ### Reference
 - https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
 - https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started-installing-the-cli
+
+## Setting Spring Security
+
+The basic setting of Spring Security is surpicesing easy. 
+I follow the reference and create users in memory as following :
+
+- `spuer` : password is `super`, role is `SUPER`.
+- `manager` : password is `manager`, role is `MANAGER`.
+- `operator` : password is `operator`, role is `OPERATOR`.
+
+Note that all  
+
+### Reference
+- https://www.hangge.com/blog/cache/detail_2672.html
+- https://www.hangge.com/blog/cache/detail_2674.html
