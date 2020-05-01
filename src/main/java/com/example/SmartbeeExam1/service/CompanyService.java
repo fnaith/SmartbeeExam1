@@ -21,6 +21,20 @@ public class CompanyService {
         return ((null != company) && !company.getDeleted());
     }
 
+    private static Company buildBody(com.example.SmartbeeExam1.model.Company company) {
+        Company body = new Company();
+
+        body.setId(company.getId());
+        body.setName(company.getName());
+        body.setAddress(company.getAddress());
+        body.setCreatedBy(company.getCreatedBy());
+        body.setCreatedAt(company.getCreatedAt().getTime());
+        body.setUpdatedBy(company.getUpdatedBy());
+        body.setUpdatedAt(company.getUpdatedAt().getTime());
+
+        return body;
+    }
+
     Logger logger = LogManager.getLogger(getClass());
 
     @Resource
@@ -34,6 +48,8 @@ public class CompanyService {
             List<com.example.SmartbeeExam1.model.Company> companies = IntStream.range(0, bodies.size())
                     .mapToObj(index -> {
                         Company body = bodies.get(index);
+                        body.setUpdatedBy(body.getCreatedBy());
+
                         com.example.SmartbeeExam1.model.Company company = new com.example.SmartbeeExam1.model.Company();
 
                         company.setId(nextId + index);
@@ -41,7 +57,7 @@ public class CompanyService {
                         company.setAddress(body.getAddress());
                         company.setCreatedBy(body.getCreatedBy());
                         company.setCreatedAt(now);
-                        company.setUpdatedBy(body.getCreatedBy());
+                        company.setUpdatedBy(body.getUpdatedBy());
                         company.setUpdatedAt(now);
                         company.setDeleted(false);
 
@@ -58,10 +74,10 @@ public class CompanyService {
                 body.setUpdatedAt(now.getTime());
             }
 
-            return new ResponseEntity<List<Company>>(bodies, HttpStatus.OK);
+            return new ResponseEntity<>(bodies, HttpStatus.OK);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<List<Company>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,29 +87,19 @@ public class CompanyService {
             companyId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
             com.example.SmartbeeExam1.model.Company company = companyRepository.findById(companyId).orElse(null);
             if (isActive(company)) {
-                Company body = new Company();
-
-                body.setId(company.getId());
-                body.setName(company.getName());
-                body.setAddress(company.getAddress());
-                body.setCreatedBy(company.getCreatedBy());
-                body.setCreatedAt(company.getCreatedAt().getTime());
-                body.setUpdatedBy(company.getUpdatedBy());
-                body.setUpdatedAt(company.getUpdatedAt().getTime());
-
-                return new ResponseEntity<Company>(body, HttpStatus.OK);
+                return new ResponseEntity<>(buildBody(company), HttpStatus.OK);
             } else {
-                return new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Company>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -103,7 +109,7 @@ public class CompanyService {
             companyId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Company>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -118,18 +124,19 @@ public class CompanyService {
 
                 try {
                     companyRepository.save(company);
+                    body.setId(companyId);
                     body.setUpdatedAt(now.getTime());
-                    return new ResponseEntity<Company>(body, HttpStatus.OK);
+                    return new ResponseEntity<>(body, HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);
-                    return new ResponseEntity<Company>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return new ResponseEntity<Company>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Company>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -139,7 +146,7 @@ public class CompanyService {
             companyId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -149,40 +156,27 @@ public class CompanyService {
 
                 try {
                     companyRepository.save(company);
-                    return new ResponseEntity<Void>(HttpStatus.OK);
+                    return new ResponseEntity<>(HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);
-                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     public ResponseEntity<List<Company>> listCompany() {
         try {
-            return new ResponseEntity<List<Company>>(companyRepository.findAll().stream()
-                    .filter(company -> isActive(company))
-                    .map(company -> {
-                        Company body = new Company();
-
-                        body.setId(company.getId());
-                        body.setName(company.getName());
-                        body.setAddress(company.getAddress());
-                        body.setCreatedBy(company.getCreatedBy());
-                        body.setCreatedAt(company.getCreatedAt().getTime());
-                        body.setUpdatedBy(company.getUpdatedBy());
-                        body.setUpdatedAt(company.getUpdatedAt().getTime());
-
-                        return body;
-                    }).collect(Collectors.toList()), HttpStatus.OK);
+            return new ResponseEntity<>(companyRepository.findAll().stream().filter(company -> isActive(company))
+                    .map(company -> buildBody(company)).collect(Collectors.toList()), HttpStatus.OK);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<List<Company>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -8,9 +8,8 @@ My plan to complete this task as following :
 - Write Dao and test repository : To ensure main requirements can be done ASAP. Althoug I never use H2 database, but it shouldn't that hard.
 - Write Swagger yaml : Because `Swagger integration` is a nice to have option and it can reduce time of crafting controller.
 - Complete RESTful API and test serive : Write service to connect controller and dao. Use Swagger UI to test.
-- Create UI for CRUD : Build a React app to ensure we can successfully access RESTful API.
 - Apply privilege on RESTful API : To meet the requirements, RESTful API will response error message when permission denied.
-- Adjust error handling for UI : Add alert when to handle error message.
+- Create UI for CRUD : Build a React app to ensure we can successfully access RESTful API.
 
 ## Create Heroku app
 
@@ -86,6 +85,7 @@ For API design, I repalce `C` of `CRUD` by the additional one for convinent.
 - https://editor.swagger.io/
 
 ## Complete RESTful API and test serive
+
 After generating controller, writing service is more straight forward.
 All API use naive implment, but instance activity is decided by `deleted` field.
 For unit test, I use SpringBootTest instead of mocking everything.
@@ -93,14 +93,13 @@ For unit test, I use SpringBootTest instead of mocking everything.
 ### Reference
 - https://www.baeldung.com/spring-boot-testing
 
-## Create UI for CRUD
-
-TODO
-
 ## Apply privilege on RESTful API
 
-TODO
+To set prvilige on roles, simpily add `antMatchers` for API path.
 
-## Adjust error handling for UI
+### Reference
+- https://www.hangge.com/blog/cache/detail_2674.html
+
+## Create UI for CRUD
 
 TODO

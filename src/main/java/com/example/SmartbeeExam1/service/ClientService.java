@@ -21,6 +21,22 @@ public class ClientService {
         return ((null != client) && !client.getDeleted());
     }
 
+    private static Client buildBody(com.example.SmartbeeExam1.model.Client client) {
+        Client body = new Client();
+
+        body.setId(client.getId());
+        body.setCompanyId(client.getCompanyId());
+        body.setName(client.getName());
+        body.setEmail(client.getEmail());
+        body.setPhone(client.getPhone());
+        body.setCreatedBy(client.getCreatedBy());
+        body.setCreatedAt(client.getCreatedAt().getTime());
+        body.setUpdatedBy(client.getUpdatedBy());
+        body.setUpdatedAt(client.getUpdatedAt().getTime());
+
+        return body;
+    }
+
     Logger logger = LogManager.getLogger(getClass());
 
     @Resource
@@ -34,6 +50,8 @@ public class ClientService {
             List<com.example.SmartbeeExam1.model.Client> clients = IntStream.range(0, bodies.size())
                     .mapToObj(index -> {
                         Client body = bodies.get(index);
+                        body.setUpdatedBy(body.getCreatedBy());
+
                         com.example.SmartbeeExam1.model.Client client = new com.example.SmartbeeExam1.model.Client();
 
                         client.setId(nextId + index);
@@ -43,7 +61,7 @@ public class ClientService {
                         client.setPhone(body.getPhone());
                         client.setCreatedBy(body.getCreatedBy());
                         client.setCreatedAt(now);
-                        client.setUpdatedBy(body.getCreatedBy());
+                        client.setUpdatedBy(body.getUpdatedBy());
                         client.setUpdatedAt(now);
                         client.setDeleted(false);
 
@@ -60,10 +78,10 @@ public class ClientService {
                 body.setUpdatedAt(now.getTime());
             }
 
-            return new ResponseEntity<List<Client>>(bodies, HttpStatus.OK);
+            return new ResponseEntity<>(bodies, HttpStatus.OK);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<List<Client>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -73,30 +91,19 @@ public class ClientService {
             clientId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
             com.example.SmartbeeExam1.model.Client client = clientRepository.findById(clientId).orElse(null);
             if (isActive(client)) {
-                Client body = new Client();
-
-                body.setId(client.getId());
-                body.setName(client.getName());
-                body.setEmail(client.getEmail());
-                body.setPhone(client.getPhone());
-                body.setCreatedBy(client.getCreatedBy());
-                body.setCreatedAt(client.getCreatedAt().getTime());
-                body.setUpdatedBy(client.getUpdatedBy());
-                body.setUpdatedAt(client.getUpdatedAt().getTime());
-
-                return new ResponseEntity<Client>(body, HttpStatus.OK);
+                return new ResponseEntity<>(buildBody(client), HttpStatus.OK);
             } else {
-                return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -106,7 +113,7 @@ public class ClientService {
             clientId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -122,18 +129,19 @@ public class ClientService {
 
                 try {
                     clientRepository.save(client);
+                    body.setId(clientId);
                     body.setUpdatedAt(now.getTime());
-                    return new ResponseEntity<Client>(body, HttpStatus.OK);
+                    return new ResponseEntity<>(body, HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);
-                    return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return new ResponseEntity<Client>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -143,7 +151,7 @@ public class ClientService {
             clientId = Integer.valueOf(id);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -153,41 +161,27 @@ public class ClientService {
 
                 try {
                     clientRepository.save(client);
-                    return new ResponseEntity<Void>(HttpStatus.OK);
+                    return new ResponseEntity<>(HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);
-                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     public ResponseEntity<List<Client>> listClient() {
         try {
-            return new ResponseEntity<List<Client>>(clientRepository.findAll().stream()
-                    .filter(client -> isActive(client))
-                    .map(client -> {
-                        Client body = new Client();
-
-                        body.setId(client.getId());
-                        body.setName(client.getName());
-                        body.setEmail(client.getEmail());
-                        body.setPhone(client.getPhone());
-                        body.setCreatedBy(client.getCreatedBy());
-                        body.setCreatedAt(client.getCreatedAt().getTime());
-                        body.setUpdatedBy(client.getUpdatedBy());
-                        body.setUpdatedAt(client.getUpdatedAt().getTime());
-
-                        return body;
-                    }).collect(Collectors.toList()), HttpStatus.OK);
+            return new ResponseEntity<>(clientRepository.findAll().stream().filter(client -> isActive(client))
+                    .map(client -> buildBody(client)).collect(Collectors.toList()), HttpStatus.OK);
         } catch (Throwable throwable) {
             logger.error(throwable);
-            return new ResponseEntity<List<Client>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
