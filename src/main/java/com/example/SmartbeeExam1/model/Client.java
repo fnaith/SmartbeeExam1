@@ -1,10 +1,6 @@
 package com.example.SmartbeeExam1.model;
 
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CLIENT")
@@ -30,13 +26,13 @@ public class Client {
     String createdBy;
 
     @Column(name = "created_at")
-    Date createdAt;
+    Long createdAt;
 
     @Column(name = "updated_by")
     String updatedBy;
 
     @Column(name = "updated_at")
-    Date updatedAt;
+    Long updatedAt;
 
     @Column(name = "deleted")
     Boolean deleted;
@@ -89,11 +85,11 @@ public class Client {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -105,11 +101,11 @@ public class Client {
         this.updatedBy = updatedBy;
     }
 
-    public Date getUpdatedAt() {
+    public Long getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -1,0 +1,44 @@
+{
+  "name": "SmartbeeExam1",
+  "description": "WebUI for SmartbeeExam1",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fnaith/SmartbeeExam1"
+  },
+  "author": "wilson.lai",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "4.9.5",
+    "@material-ui/icons": "4.9.1",
+    "@welldone-software/why-did-you-render": "^4.0.5",
+    "font-awesome": "4.7.0",
+    "node-sass": "^4.13.1",
+    "react": "16.13.0",
+    "react-dom": "16.13.0",
+    "react-scripts": "3.4.0",
+    "typescript": "3.8.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "16.9.23",
+    "@types/react-dom": "16.9.5"
+  }
+}

@@ -83,9 +83,9 @@ public class ClientRepositoryTests {
         client.setEmail("");
         client.setPhone("");
         client.setCreatedBy("");
-        client.setCreatedAt(new Date());
+        client.setCreatedAt(new Date().getTime());
         client.setUpdatedBy("");
-        client.setUpdatedAt(new Date());
+        client.setUpdatedAt(new Date().getTime());
         client.setDeleted(false);
 
         return client;

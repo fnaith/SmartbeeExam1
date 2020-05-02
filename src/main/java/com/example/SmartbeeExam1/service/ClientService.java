@@ -30,9 +30,9 @@ public class ClientService {
         body.setEmail(client.getEmail());
         body.setPhone(client.getPhone());
         body.setCreatedBy(client.getCreatedBy());
-        body.setCreatedAt(client.getCreatedAt().getTime());
+        body.setCreatedAt(client.getCreatedAt());
         body.setUpdatedBy(client.getUpdatedBy());
-        body.setUpdatedAt(client.getUpdatedAt().getTime());
+        body.setUpdatedAt(client.getUpdatedAt());
 
         return body;
     }
@@ -44,7 +44,7 @@ public class ClientService {
 
     public ResponseEntity<List<Client>> createClient(List<Client> bodies) {
         try {
-            Date now = new Date();
+            long now = new Date().getTime();
             int nextId = (int)clientRepository.count();
 
             List<com.example.SmartbeeExam1.model.Client> clients = IntStream.range(0, bodies.size())
@@ -74,8 +74,8 @@ public class ClientService {
                 com.example.SmartbeeExam1.model.Client client = clients.get(i);
                 Client body = bodies.get(i);
                 body.setId(client.getId());
-                body.setCreatedAt(now.getTime());
-                body.setUpdatedAt(now.getTime());
+                body.setCreatedAt(now);
+                body.setUpdatedAt(now);
             }
 
             return new ResponseEntity<>(bodies, HttpStatus.OK);
@@ -124,13 +124,13 @@ public class ClientService {
                 client.setPhone(body.getPhone());
                 client.setUpdatedBy(body.getUpdatedBy());
 
-                Date now = new Date();
+                long now = new Date().getTime();
                 client.setUpdatedAt(now);
 
                 try {
                     clientRepository.save(client);
                     body.setId(clientId);
-                    body.setUpdatedAt(now.getTime());
+                    body.setUpdatedAt(now);
                     return new ResponseEntity<>(body, HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);

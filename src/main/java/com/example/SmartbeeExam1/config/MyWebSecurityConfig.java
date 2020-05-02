@@ -29,7 +29,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected  void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/super/**").hasRole("SUPER")
                 .antMatchers("/manager/**").access("hasAnyRole('SUPER','MANAGER')")

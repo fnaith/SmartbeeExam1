@@ -5,9 +5,9 @@ CREATE TABLE COMPANY (
   name VARCHAR(100) NOT NULL,
   address VARCHAR(200) NOT NULL,
   created_by VARCHAR(50) NOT NULL,
-  created_at Date NOT NULL,
+  created_at BIGINT NOT NULL,
   updated_by VARCHAR(50) NOT NULL,
-  updated_at Date NOT NULL,
+  updated_at BIGINT NOT NULL,
   deleted NUMBER(1,0) NOT NULL,
   PRIMARY KEY(id)
 );
@@ -21,9 +21,9 @@ CREATE TABLE CLIENT (
   email VARCHAR(100) NOT NULL,
   phone VARCHAR(50) NOT NULL,
   created_by VARCHAR(50) NOT NULL,
-  created_at Date NOT NULL,
+  created_at BIGINT NOT NULL,
   updated_by VARCHAR(50) NOT NULL,
-  updated_at Date NOT NULL,
+  updated_at BIGINT NOT NULL,
   deleted NUMBER(1,0) NOT NULL,
   PRIMARY KEY(id)
 );

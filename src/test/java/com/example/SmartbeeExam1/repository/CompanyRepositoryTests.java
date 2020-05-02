@@ -82,9 +82,9 @@ public class CompanyRepositoryTests {
         company.setName("");
         company.setAddress("");
         company.setCreatedBy("");
-        company.setCreatedAt(new Date());
+        company.setCreatedAt(new Date().getTime());
         company.setUpdatedBy("");
-        company.setUpdatedAt(new Date());
+        company.setUpdatedAt(new Date().getTime());
         company.setDeleted(false);
 
         return company;

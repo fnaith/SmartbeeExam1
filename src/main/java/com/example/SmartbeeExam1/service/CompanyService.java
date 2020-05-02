@@ -28,9 +28,9 @@ public class CompanyService {
         body.setName(company.getName());
         body.setAddress(company.getAddress());
         body.setCreatedBy(company.getCreatedBy());
-        body.setCreatedAt(company.getCreatedAt().getTime());
+        body.setCreatedAt(company.getCreatedAt());
         body.setUpdatedBy(company.getUpdatedBy());
-        body.setUpdatedAt(company.getUpdatedAt().getTime());
+        body.setUpdatedAt(company.getUpdatedAt());
 
         return body;
     }
@@ -42,7 +42,7 @@ public class CompanyService {
 
     public ResponseEntity<List<Company>> createCompany(List<Company> bodies) {
         try {
-            Date now = new Date();
+            long now = new Date().getTime();
             int nextId = (int)companyRepository.count();
 
             List<com.example.SmartbeeExam1.model.Company> companies = IntStream.range(0, bodies.size())
@@ -70,8 +70,8 @@ public class CompanyService {
                 com.example.SmartbeeExam1.model.Company company = companies.get(i);
                 Company body = bodies.get(i);
                 body.setId(company.getId());
-                body.setCreatedAt(now.getTime());
-                body.setUpdatedAt(now.getTime());
+                body.setCreatedAt(now);
+                body.setUpdatedAt(now);
             }
 
             return new ResponseEntity<>(bodies, HttpStatus.OK);
@@ -119,13 +119,13 @@ public class CompanyService {
                 company.setAddress(body.getAddress());
                 company.setUpdatedBy(body.getUpdatedBy());
 
-                Date now = new Date();
+                long now = new Date().getTime();
                 company.setUpdatedAt(now);
 
                 try {
                     companyRepository.save(company);
                     body.setId(companyId);
-                    body.setUpdatedAt(now.getTime());
+                    body.setUpdatedAt(now);
                     return new ResponseEntity<>(body, HttpStatus.OK);
                 } catch (Throwable throwable) {
                     logger.error(throwable);
