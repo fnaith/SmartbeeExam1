@@ -11,7 +11,7 @@ class AppStore {
   private static readonly DEFAULT_TIMEZONE: string = 'Asia/Taipei';
   private static readonly DEFAULT_LOCALE: string = 'en-US';
 
-  private readonly _apiPath = `http://${window.location.hostname}:8080`;
+  private readonly _apiPath = `${window.location.protocol}//${window.location.hostname}:8080`;
 
   private _initted: boolean;
   private _updateControlPanel: any;
